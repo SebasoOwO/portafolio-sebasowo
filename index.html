@@ -203,9 +203,7 @@
     </div>
   </footer>
 
-  <!-- ==================== MODALES ADMIN ==================== -->
-  
-  <!-- MODAL PROYECTO -->
+  <!-- MODALES ADMIN -->
   <div id="projectModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Proyecto</h3>
@@ -214,9 +212,8 @@
       <textarea id="projDesc" placeholder="Descripción breve" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-20"></textarea>
       <input id="projClient" type="text" placeholder="Hecho para (Ej: Tunki Studio)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       
-      <!-- Selector/Creador de Tags -->
       <div>
-        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags para este Proyecto</label>
+        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags (Haz clic para seleccionar o presiona la X para borrar)</label>
         <div class="flex gap-2 mb-2">
           <input id="newProjTagInput" type="text" placeholder="Nueva Tag (Ej: Plugins)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
           <button onclick="addNewGlobalTag('proj')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
@@ -231,7 +228,6 @@
     </div>
   </div>
 
-  <!-- MODAL TRABAJO -->
   <div id="jobModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Trabajo</h3>
@@ -245,9 +241,8 @@
       <input id="jobRole" type="text" placeholder="Tu Rol (Ej: Lead Developer)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <textarea id="jobDesc" placeholder="Descripción de tus labores" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-20"></textarea>
       
-      <!-- Selector/Creador de Tags -->
       <div>
-        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags para este Trabajo</label>
+        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags (Haz clic para seleccionar o presiona la X para borrar)</label>
         <div class="flex gap-2 mb-2">
           <input id="newJobTagInput" type="text" placeholder="Nueva Tag (Ej: Minijuegos)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
           <button onclick="addNewGlobalTag('job')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
@@ -263,7 +258,6 @@
     </div>
   </div>
 
-  <!-- MODAL TESTIMONIO -->
   <div id="testimonialModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Testimonio</h3>
@@ -283,13 +277,8 @@
     const GLOBAL_COUNTER_KEY = "sebasowo_unique_discord_users_counter_v1";
     let isAdmin = false;
 
-    // Tags Globales por defecto
     let globalTags = JSON.parse(localStorage.getItem('sebas_global_tags') || '["Conditional Events", "Dueño", "Creador de eventos", "Minijuegos", "Mecánicas", "Java"]');
-
-    // Estado de selección temporal en modales
     let selectedModalTags = [];
-
-    // Filtros activos en las secciones
     let activeProjTagFilter = "Todos";
     let activeJobTagFilter = "Todos";
 
@@ -456,17 +445,21 @@
       }
     }
 
-    // --- SISTEMA DE TAGS GLOBAL Y DINÁMICO ---
+    // --- MANEJO DE TAGS (SELECCIONAR Y ELIMINAR GLOBALES) ---
     function renderModalTags(type) {
       const container = document.getElementById(type === 'proj' ? 'modalProjTagsList' : 'modalJobTagsList');
       container.innerHTML = '';
+
       globalTags.forEach(tag => {
         const isSelected = selectedModalTags.includes(tag);
-        const tagChip = document.createElement('button');
-        tagChip.type = 'button';
-        tagChip.className = `text-xs px-2.5 py-1 rounded-full border transition-all ${isSelected ? 'bg-blue-600 border-blue-500 text-white font-semibold' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'}`;
-        tagChip.innerText = tag;
-        tagChip.onclick = () => {
+        
+        const wrapper = document.createElement('div');
+        wrapper.className = `inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border transition-all ${isSelected ? 'bg-blue-600 border-blue-500 text-white font-semibold' : 'bg-slate-900 border-slate-800 text-slate-400'}`;
+
+        const tagBtn = document.createElement('span');
+        tagBtn.className = "cursor-pointer";
+        tagBtn.innerText = tag;
+        tagBtn.onclick = () => {
           if (isSelected) {
             selectedModalTags = selectedModalTags.filter(t => t !== tag);
           } else {
@@ -474,8 +467,28 @@
           }
           renderModalTags(type);
         };
-        container.appendChild(tagChip);
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.className = "text-red-400 hover:text-red-300 font-bold ml-1 px-1";
+        deleteBtn.innerText = "✕";
+        deleteBtn.onclick = (e) => {
+          e.stopPropagation();
+          deleteGlobalTag(tag);
+          renderModalTags(type);
+        };
+
+        wrapper.appendChild(tagBtn);
+        wrapper.appendChild(deleteBtn);
+        container.appendChild(wrapper);
       });
+    }
+
+    function deleteGlobalTag(tagToDelete) {
+      globalTags = globalTags.filter(t => t !== tagToDelete);
+      selectedModalTags = selectedModalTags.filter(t => t !== tagToDelete);
+      localStorage.setItem('sebas_global_tags', JSON.stringify(globalTags));
+      loadCustomContent();
     }
 
     function addNewGlobalTag(type) {
@@ -487,6 +500,7 @@
         localStorage.setItem('sebas_global_tags', JSON.stringify(globalTags));
         input.value = '';
         renderModalTags(type);
+        loadCustomContent();
       }
     }
 
