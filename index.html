@@ -49,7 +49,7 @@
 
       <div class="mt-6 pt-4 border-t border-slate-800 flex items-center justify-center gap-2 text-xs text-slate-500">
         <i data-lucide="users" class="w-4 h-4 text-blue-400"></i>
-        <span>Entradas registradas: <strong id="visitorCount" class="text-blue-400 font-bold">128</strong> personas</span>
+        <span>Personas únicas registradas: <strong id="gateVisitorCount" class="text-blue-400 font-bold">0</strong></span>
       </div>
     </div>
   </div>
@@ -145,33 +145,7 @@
       </button>
     </div>
 
-    <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <div class="bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
-        <div class="aspect-video bg-black relative">
-          <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="El Hormiguero" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between">
-          <div>
-            <h3 class="text-lg font-bold text-white mb-2">El Hormiguero 🐜</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">Sistema de selección de equipos automáticos, comandos y mecánicas.</p>
-          </div>
-          <span class="text-blue-400 text-xs font-semibold">Hecho para Tunki Studio</span>
-        </div>
-      </div>
-
-      <div class="bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
-        <div class="aspect-video bg-black relative">
-          <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="El Hoyo" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <div class="p-5 flex-1 flex flex-col justify-between">
-          <div>
-            <h3 class="text-lg font-bold text-white mb-2">El Hoyo 🕳️</h3>
-            <p class="text-slate-400 text-xs leading-relaxed mb-4">Sistema de TP a camas aleatorio, agarrar comida y mecánicas avanzadas.</p>
-          </div>
-          <span class="text-blue-400 text-xs font-semibold">Hecho para Capybara Studio</span>
-        </div>
-      </div>
-    </div>
+    <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
   </section>
 
   <!-- TRABAJO EN -->
@@ -183,48 +157,7 @@
       </button>
     </div>
 
-    <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
-        <div>
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-12 h-12 bg-orange-500/20 border border-orange-500/30 rounded-xl flex items-center justify-center text-orange-400 font-bold text-xl">
-              🐤
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-white">Tunki Studio</h3>
-              <p class="text-blue-400 text-xs font-medium">Co-Founder y developer</p>
-            </div>
-          </div>
-          <p class="text-slate-400 text-xs leading-relaxed mb-6">Desarrollo sistemas personalizados, automatizaciones, interfaces visuales y mecánicas para mis eventos.</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Conditional Events</span>
-            <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Dueño</span>
-            <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Creador de eventos</span>
-          </div>
-        </div>
-        <a href="https://discord.gg" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition-all text-center text-xs block">Unirse al Discord</a>
-      </div>
-
-      <div class="bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
-        <div>
-          <div class="flex items-center gap-4 mb-4">
-            <div class="w-12 h-12 bg-amber-500/20 border border-amber-500/30 rounded-xl flex items-center justify-center text-amber-400 font-bold text-xl">
-              🦫
-            </div>
-            <div>
-              <h3 class="text-xl font-bold text-white">Capybara Studio</h3>
-              <p class="text-blue-400 text-xs font-medium">Developer</p>
-            </div>
-          </div>
-          <p class="text-slate-400 text-xs leading-relaxed mb-6">Configuro minijuegos y mecánicas personalizadas.</p>
-          <div class="flex flex-wrap gap-2 mb-6">
-            <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Minijuegos</span>
-            <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Mecánicas</span>
-          </div>
-        </div>
-        <a href="https://discord.gg" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition-all text-center text-xs block">Unirse al Discord</a>
-      </div>
-    </div>
+    <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
 
   <!-- TESTIMONIOS -->
@@ -236,32 +169,31 @@
       </button>
     </div>
 
-    <div id="testimonialsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <div class="bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl">
-        <p class="text-slate-300 text-sm italic mb-4">"Excelente desarrollador, entregó las mecánicas a tiempo y sin ningún tipo de error."</p>
-        <div class="flex items-center gap-3">
-          <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center font-bold text-blue-400">T</div>
-          <div>
-            <h4 class="text-white text-sm font-bold">Tunki Staff</h4>
-            <p class="text-xs text-slate-500">Owner de Servidor</p>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div id="testimonialsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
 
-  <!-- CONTACTO -->
-  <footer id="contacto" class="max-w-5xl mx-auto px-4 py-16 border-t border-slate-800/60 text-center">
-    <h2 class="text-3xl font-extrabold text-blue-500 mb-4">¿Quieres trabajar conmigo?</h2>
-    <p class="text-slate-400 text-sm max-w-md mx-auto mb-8">Escríbeme por Discord para acordar cotizaciones de plugins, eventos y mecánicas únicas.</p>
-    <a href="https://discord.com" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold px-8 py-3 rounded-xl transition-all inline-flex items-center gap-3 shadow-lg shadow-indigo-500/20">
-      Contactar en Discord
-    </a>
+  <!-- CONTACTO Y CONTADOR FINAL PÚBLICO -->
+  <footer id="contacto" class="max-w-5xl mx-auto px-4 py-16 border-t border-slate-800/60 text-center space-y-8">
+    <div>
+      <h2 class="text-3xl font-extrabold text-blue-500 mb-4">¿Quieres trabajar conmigo?</h2>
+      <p class="text-slate-400 text-sm max-w-md mx-auto mb-8">Escríbeme por Discord para acordar cotizaciones de plugins, eventos y mecánicas únicas.</p>
+      <a href="https://discord.com" target="_blank" class="bg-[#5865F2] hover:bg-[#4752C4] text-white font-semibold px-8 py-3 rounded-xl transition-all inline-flex items-center gap-3 shadow-lg shadow-indigo-500/20">
+        Contactar en Discord
+      </a>
+    </div>
+
+    <!-- CONTADOR GLOBAL LIMPIO (VISIBLE PARA TODOS) -->
+    <div class="pt-8 border-t border-slate-800/40 flex flex-col items-center justify-center gap-2">
+      <div class="inline-flex items-center gap-3 bg-[#111827] border border-slate-800/80 px-6 py-3 rounded-2xl shadow-xl">
+        <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+        <span class="text-slate-400 text-xs font-medium">Usuarios registrados vía Discord:</span>
+        <strong id="footerVisitorCounter" class="text-blue-400 text-lg font-black tracking-wider">0</strong>
+      </div>
+      <p class="text-[11px] text-slate-600">© SebasOwO - Portafolio Oficial</p>
+    </div>
   </footer>
 
-  <!-- ==================== MODALES ADMIN ==================== -->
-  
-  <!-- MODAL AÑADIR PROYECTO -->
+  <!-- MODALES ADMIN -->
   <div id="projectModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Proyecto</h3>
@@ -276,7 +208,6 @@
     </div>
   </div>
 
-  <!-- MODAL AÑADIR TRABAJO -->
   <div id="jobModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Trabajo</h3>
@@ -293,7 +224,6 @@
     </div>
   </div>
 
-  <!-- MODAL AÑADIR TESTIMONIO -->
   <div id="testimonialModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Testimonio</h3>
@@ -308,27 +238,63 @@
   </div>
 
   <script>
-    // CREDANCIALES DEFINIDAS INTERNAMENTE
     const MY_DISCORD_ID = "1020476252513120306";
     const CLIENT_ID = "1562651106218082354";
+    const GLOBAL_COUNTER_KEY = "sebasowo_unique_discord_users_counter_v1";
+    let isAdmin = false;
+
+    // Datos por defecto
+    const defaultProjects = [
+      { title: "El Hormiguero 🐜", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de selección de equipos automáticos, comandos y mecánicas.", client: "Tunki Studio" },
+      { title: "El Hoyo 🕳️", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de TP a camas aleatorio, agarrar comida y mecánicas avanzadas.", client: "Capybara Studio" }
+    ];
+
+    const defaultJobs = [
+      { icon: "🐥", name: "Tunki Studio", role: "Co-Founder y developer", desc: "Desarrollo sistemas personalizados, automatizaciones, interfaces visuales y mecánicas para mis eventos.", tags: ["Conditional Events", "Dueño", "Creador de eventos"], discord: "https://discord.gg" },
+      { icon: "🦫", name: "Capybara Studio", role: "Developer", desc: "Configuro minijuegos y mecánicas personalizadas.", tags: ["Minijuegos", "Mecánicas"], discord: "https://discord.gg" }
+    ];
+
+    const defaultTestimonials = [
+      { name: "Tunki Staff", role: "Owner de Servidor", comment: "Excelente desarrollador, entregó las mecánicas a tiempo y sin ningún tipo de error." }
+    ];
 
     lucide.createIcons();
 
-    // 1. Contador de Entradas
-    let visits = parseInt(localStorage.getItem('sebas_visit_count') || '128');
-    document.getElementById('visitorCount').innerText = visits;
-
-    // 2. Comprobar inicio de sesión
+    // Cargar contador global al iniciar la página
     window.addEventListener('load', () => {
+      fetchGlobalCounter();
       checkAuth();
       connectLanyardStatus();
       loadCustomContent();
     });
 
-    function loginWithDiscord() {
-      visits++;
-      localStorage.setItem('sebas_visit_count', visits.toString());
+    // API pública para mantener el valor global actualizado en internet
+    function fetchGlobalCounter() {
+      fetch(`https://countapi.mileshilliard.com/api/v1/get/${GLOBAL_COUNTER_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          const val = data.value || 0;
+          document.getElementById('gateVisitorCount').innerText = val;
+          document.getElementById('footerVisitorCounter').innerText = val;
+        })
+        .catch(() => {
+          document.getElementById('gateVisitorCount').innerText = "0";
+          document.getElementById('footerVisitorCounter').innerText = "0";
+        });
+    }
 
+    function incrementGlobalCounter() {
+      fetch(`https://countapi.mileshilliard.com/api/v1/hit/${GLOBAL_COUNTER_KEY}`)
+        .then(res => res.json())
+        .then(data => {
+          const val = data.value || 0;
+          document.getElementById('gateVisitorCount').innerText = val;
+          document.getElementById('footerVisitorCounter').innerText = val;
+        })
+        .catch(() => {});
+    }
+
+    function loginWithDiscord() {
       const redirectUri = window.location.origin + window.location.pathname;
       const authUrl = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=identify`;
       window.location.href = authUrl;
@@ -355,6 +321,14 @@
           if (user.id) {
             document.getElementById('discordGate').classList.add('hidden');
             setupUserUI(user);
+
+            // REGISTRO ÚNICO: Solo suma +1 si esta ID de Discord nunca se ha registrado en esta web
+            const registeredUsers = JSON.parse(localStorage.getItem('registered_discord_ids') || '[]');
+            if (!registeredUsers.includes(user.id)) {
+              registeredUsers.push(user.id);
+              localStorage.setItem('registered_discord_ids', JSON.stringify(registeredUsers));
+              incrementGlobalCounter(); // Incrementa el contador global en la nube
+            }
           }
         })
         .catch(() => {
@@ -373,31 +347,22 @@
       avatar.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
       name.innerText = user.username;
 
-      // Verificar si es la ID de SebasOwO
       if (user.id === MY_DISCORD_ID || user.username.toLowerCase() === 'sebasowo') {
+        isAdmin = true;
         adminTag.classList.remove('hidden');
         document.getElementById('addProjectBtn').classList.remove('hidden');
         document.getElementById('addJobBtn').classList.remove('hidden');
         document.getElementById('addTestimonialBtn').classList.remove('hidden');
+        loadCustomContent();
       }
     }
 
-    // 3. Lanyard API Realtime Status (ID: 1020476252513120306)
     function connectLanyardStatus() {
       const ws = new WebSocket('wss://api.lanyard.rest/socket');
-      
-      ws.onopen = () => {
-        ws.send(JSON.stringify({
-          op: 2,
-          d: { subscribe_to_id: MY_DISCORD_ID }
-        }));
-      };
-
+      ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: MY_DISCORD_ID } }));
       ws.onmessage = (event) => {
         const data = JSON.parse(event.data);
-        if (data.t === 'INIT_STATE' || data.t === 'PRESENCE_UPDATE') {
-          updateDiscordCard(data.d);
-        }
+        if (data.t === 'INIT_STATE' || data.t === 'PRESENCE_UPDATE') updateDiscordCard(data.d);
       };
     }
 
@@ -423,7 +388,6 @@
       }
     }
 
-    // 4. Lógica de Modales y Carga Dinámica
     function openProjectModal() { document.getElementById('projectModal').classList.remove('hidden'); }
     function openJobModal() { document.getElementById('jobModal').classList.remove('hidden'); }
     function openTestimonialModal() { document.getElementById('testimonialModal').classList.remove('hidden'); }
@@ -439,14 +403,19 @@
       const video = document.getElementById('projVideo').value;
       const desc = document.getElementById('projDesc').value;
       const client = document.getElementById('projClient').value;
-
       if (!title) return;
 
-      const projects = JSON.parse(localStorage.getItem('custom_projects') || '[]');
+      const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
       projects.push({ title, video, desc, client });
       localStorage.setItem('custom_projects', JSON.stringify(projects));
-      
       closeModals();
+      loadCustomContent();
+    }
+
+    function deleteProject(index) {
+      const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
+      projects.splice(index, 1);
+      localStorage.setItem('custom_projects', JSON.stringify(projects));
       loadCustomContent();
     }
 
@@ -457,14 +426,19 @@
       const desc = document.getElementById('jobDesc').value;
       const tags = document.getElementById('jobTags').value.split(',');
       const discord = document.getElementById('jobDiscord').value;
-
       if (!name) return;
 
-      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || '[]');
+      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
       jobs.push({ icon, name, role, desc, tags, discord });
       localStorage.setItem('custom_jobs', JSON.stringify(jobs));
-
       closeModals();
+      loadCustomContent();
+    }
+
+    function deleteJob(index) {
+      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
+      jobs.splice(index, 1);
+      localStorage.setItem('custom_jobs', JSON.stringify(jobs));
       loadCustomContent();
     }
 
@@ -472,14 +446,19 @@
       const name = document.getElementById('testiName').value;
       const role = document.getElementById('testiRole').value;
       const comment = document.getElementById('testiComment').value;
-
       if (!name) return;
 
-      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || '[]');
+      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
       testimonials.push({ name, role, comment });
       localStorage.setItem('custom_testimonials', JSON.stringify(testimonials));
-
       closeModals();
+      loadCustomContent();
+    }
+
+    function deleteTestimonial(index) {
+      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
+      testimonials.splice(index, 1);
+      localStorage.setItem('custom_testimonials', JSON.stringify(testimonials));
       loadCustomContent();
     }
 
@@ -494,12 +473,14 @@
         return `<video class="w-full h-full object-cover" controls src="${url}"></video>`;
       };
 
-      const projects = JSON.parse(localStorage.getItem('custom_projects') || '[]');
+      const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
       const projGrid = document.getElementById('projectsGrid');
-      projects.forEach(p => {
+      projGrid.innerHTML = '';
+      projects.forEach((p, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col";
+        card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col relative group";
         card.innerHTML = `
+          ${isAdmin ? `<button onclick="deleteProject(${idx})" class="absolute top-2 right-2 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
           <div class="aspect-video bg-black relative">${getMediaHTML(p.video)}</div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
@@ -512,12 +493,14 @@
         projGrid.appendChild(card);
       });
 
-      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || '[]');
+      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
       const jobsGrid = document.getElementById('jobsGrid');
-      jobs.forEach(j => {
+      jobsGrid.innerHTML = '';
+      jobs.forEach((j, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between";
+        card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between relative";
         card.innerHTML = `
+          ${isAdmin ? `<button onclick="deleteJob(${idx})" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
           <div>
             <div class="flex items-center gap-4 mb-4">
               <div class="w-12 h-12 bg-blue-500/20 border border-blue-500/30 rounded-xl flex items-center justify-center text-blue-400 font-bold text-xl">${j.icon}</div>
@@ -536,12 +519,14 @@
         jobsGrid.appendChild(card);
       });
 
-      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || '[]');
+      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
       const testiGrid = document.getElementById('testimonialsGrid');
-      testimonials.forEach(t => {
+      testiGrid.innerHTML = '';
+      testimonials.forEach((t, idx) => {
         const card = document.createElement('div');
-        card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl";
+        card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl relative";
         card.innerHTML = `
+          ${isAdmin ? `<button onclick="deleteTestimonial(${idx})" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
           <p class="text-slate-300 text-sm italic mb-4">"${t.comment}"</p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center font-bold text-blue-400">${t.name.charAt(0)}</div>
