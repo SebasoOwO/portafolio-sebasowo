@@ -15,9 +15,7 @@
       background-color: #0b0e14;
       color: #e2e8f0;
     }
-    .blur-gate {
-      backdrop-filter: blur(16px);
-    }
+    .blur-gate { backdrop-filter: blur(16px); }
     .status-online { background-color: #23a55a; }
     .status-idle { background-color: #f0b232; }
     .status-dnd { background-color: #f23f43; }
@@ -67,7 +65,7 @@
         <a href="#contacto" class="hover:text-blue-400 transition-colors">Contacto</a>
       </div>
 
-      <!-- User Status Badge -->
+      <!-- User Badge -->
       <div id="userBadge" class="hidden flex items-center gap-2 bg-slate-900 border border-slate-800 px-3 py-1.5 rounded-full text-xs">
         <img id="userAvatar" src="" class="w-5 h-5 rounded-full" alt="Avatar">
         <span id="userName" class="font-medium text-slate-200"></span>
@@ -85,25 +83,19 @@
       Conditional Events Plugin & Minecraft Developer. Creo mecánicas únicas, sistemas personalizados y minijuegos para servidores de Minecraft.
     </p>
     <div class="flex flex-wrap items-center justify-center gap-4">
-      <a href="#proyectos" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-blue-600/20">
-        Ver Proyectos
-      </a>
-      <a href="#contacto" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all border border-slate-700">
-        Contáctame
-      </a>
-      <a href="https://www.twitch.tv/sebas_owo1" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
-        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
-          <path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
-        </svg>
+      <a href="#proyectos" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-blue-600/20">Ver Proyectos</a>
+      <a href="#contacto" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all border border-slate-700">Contáctame</a>
+      <a href="https://twitch.tv" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
+        <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
         Twitch
       </a>
     </div>
   </section>
 
-  <!-- ACERCA DE MÍ -->
+  <!-- ACERCA DE MÍ & TARJETA ACTIVIDAD DISCORD EN VIVO -->
   <section id="acerca" class="max-w-5xl mx-auto px-4 py-16 border-t border-slate-800/60">
     <h2 class="text-3xl font-extrabold text-blue-500 mb-8">Acerca de mí</h2>
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
       <div class="md:col-span-5 flex justify-center">
         <div class="relative group">
           <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
@@ -116,27 +108,62 @@
           </div>
         </div>
       </div>
+
       <div class="md:col-span-7 space-y-4 text-slate-300">
         <p>Soy desarrollador especializado en Minecraft y el lenguaje del plugin <strong>Conditional Events</strong> creado por Ajneb97.</p>
         <p>Me gusta crear experiencias inspiradas en grandes eventos y servidores personalizados como Eufonia Studio.</p>
-        <p>También trabajo con variables usando el plugin <strong>ServerVariables</strong> y sistemas avanzados para servidores.</p>
 
-        <!-- DISCORD STATUS EN VIVO DE SEBASOWO -->
-        <div class="pt-4">
-          <div id="discordStatusCard" class="bg-[#111827] border border-slate-800 rounded-2xl p-4 flex items-center gap-4 max-w-md shadow-xl">
-            <div class="relative">
-              <img id="dcAvatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-12 h-12 rounded-full border border-slate-700" alt="Discord Avatar">
-              <span id="dcStatusDot" class="absolute bottom-0 right-0 w-3.5 h-3.5 status-offline rounded-full border-2 border-[#111827]"></span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2">
-                <h4 id="dcUsername" class="font-bold text-white text-sm truncate">SebasOwO</h4>
-                <span class="bg-blue-500/10 text-blue-400 text-[10px] font-semibold px-2 py-0.5 rounded-full border border-blue-500/20">Discord Status</span>
+        <!-- DISCORD ACTIVITY CARD ESTILO COMPLETO DE DISCORD -->
+        <div class="pt-2">
+          <div class="bg-[#18191c] border border-slate-800 rounded-2xl p-5 shadow-2xl space-y-4">
+            
+            <!-- HEADER DE PERFIL DE DISCORD -->
+            <div class="flex items-center gap-4">
+              <div class="relative">
+                <img id="dcAvatar" src="https://cdn.discordapp.com/embed/avatars/0.png" class="w-14 h-14 rounded-full border-2 border-slate-700 shadow-md object-cover" alt="Discord Avatar">
+                <span id="dcStatusDot" class="absolute bottom-0 right-0 w-4 h-4 status-offline rounded-full border-2 border-[#18191c]"></span>
               </div>
-              <p id="dcActivity" class="text-xs text-slate-400 truncate mt-0.5">Cargando estado en vivo...</p>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <h4 id="dcUsername" class="font-extrabold text-white text-base truncate">SebasOwO</h4>
+                  <span class="bg-blue-500/10 text-blue-400 text-[10px] font-bold px-2 py-0.5 rounded-full border border-blue-500/20">DISCORD PRESENCE</span>
+                </div>
+                <div id="dcCustomStatus" class="text-xs text-slate-400 truncate mt-1 flex items-center gap-1.5">
+                  <span>Conectando con Discord...</span>
+                </div>
+              </div>
             </div>
+
+            <!-- ACTIVIDAD ACTUAL (JUEGOS / INTELLIJ / OTROS) -->
+            <div id="dcActivityCard" class="hidden bg-[#2b2d31] rounded-xl p-3.5 border border-slate-700/50">
+              <p class="text-[10px] font-bold tracking-wider text-slate-400 uppercase mb-2">Actividad Actual</p>
+              <div class="flex items-center gap-3">
+                <img id="dcActIcon" src="" class="w-12 h-12 rounded-lg object-cover hidden">
+                <div class="min-w-0 flex-1">
+                  <h5 id="dcActName" class="text-sm font-bold text-white truncate"></h5>
+                  <p id="dcActDetails" class="text-xs text-slate-300 truncate mt-0.5"></p>
+                  <p id="dcActState" class="text-[11px] text-slate-400 truncate mt-0.5"></p>
+                </div>
+              </div>
+            </div>
+
+            <!-- REPRODUCTOR OFICIAL DE SPOTIFY EN VIVO -->
+            <div id="spotifyContainer" class="hidden space-y-2">
+              <p class="text-[10px] font-bold tracking-wider text-emerald-400 uppercase flex items-center gap-1.5">
+                <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm5.521 17.341c-.219.359-.692.472-1.05.253-2.879-1.758-6.502-2.156-10.77-1.18-.406.094-.813-.164-.906-.57-.094-.406.164-.813.57-.906 4.673-1.07 8.665-.615 11.902 1.356.359.219.472.692.254 1.047zm1.472-3.273c-.273.445-.852.586-1.297.313-3.293-2.023-8.312-2.61-12.207-1.428-.5.153-1.028-.135-1.18-.635-.153-.5.135-1.028.635-1.18 4.453-1.352 9.988-.7 13.736 1.608.445.273.586.852.313 1.297zm.152-3.41c-3.95-2.346-10.457-2.562-14.218-1.421-.61.186-1.25-.164-1.436-.774-.186-.61.164-1.25.774-1.436 4.318-1.31 11.488-1.045 16.035 1.652.55.326.73 1.037.404 1.587-.326.55-1.037.73-1.587.404z"/></svg>
+                Escuchando Spotify
+              </p>
+              <div id="spotifyEmbedWrapper" class="rounded-xl overflow-hidden shadow-lg border border-emerald-500/20"></div>
+            </div>
+
+            <!-- AVISO DE CONEXIÓN DE LANYARD SI NO DETECTA ESTADO -->
+            <div id="lanyardNotice" class="text-[11px] text-slate-500 text-center pt-1 border-t border-slate-800">
+              ¿No ves el estado? Únete 1 vez a <a href="https://discord.gg/lanyard" target="_blank" class="text-blue-400 underline font-semibold">discord.gg/lanyard</a>
+            </div>
+
           </div>
         </div>
+
       </div>
     </div>
   </section>
@@ -149,7 +176,6 @@
         <i data-lucide="plus" class="w-4 h-4"></i> Añadir Proyecto
       </button>
     </div>
-
     <div id="projectTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
     <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
   </section>
@@ -162,7 +188,6 @@
         <i data-lucide="plus" class="w-4 h-4"></i> Añadir Trabajo
       </button>
     </div>
-
     <div id="jobTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
     <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
@@ -175,7 +200,6 @@
         <i data-lucide="plus" class="w-4 h-4"></i> Añadir Testimonio
       </button>
     </div>
-
     <div id="testimonialsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
 
@@ -209,9 +233,9 @@
       <input id="projClient" type="text" placeholder="Hecho para (Ej: Tunki Studio)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       
       <div>
-        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags (Haz clic para seleccionar o presiona la X para borrar)</label>
+        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags</label>
         <div class="flex gap-2 mb-2">
-          <input id="newProjTagInput" type="text" placeholder="Nueva Tag (Ej: Plugins)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
+          <input id="newProjTagInput" type="text" placeholder="Nueva Tag" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
           <button onclick="addNewGlobalTag('proj')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
         </div>
         <div id="modalProjTagsList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1"></div>
@@ -227,25 +251,21 @@
   <div id="jobModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Trabajo</h3>
-      
       <div>
         <label class="block text-slate-400 text-xs mb-1.5 font-medium">Icono del Trabajo (Subir Imagen)</label>
         <input type="file" id="jobIconFile" accept="image/*" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500">
       </div>
-
       <input id="jobName" type="text" placeholder="Nombre de la empresa/studio" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <input id="jobRole" type="text" placeholder="Tu Rol (Ej: Lead Developer)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <textarea id="jobDesc" placeholder="Descripción de tus labores" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-20"></textarea>
-      
       <div>
-        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags (Haz clic para seleccionar o presiona la X para borrar)</label>
+        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags</label>
         <div class="flex gap-2 mb-2">
-          <input id="newJobTagInput" type="text" placeholder="Nueva Tag (Ej: Minijuegos)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
+          <input id="newJobTagInput" type="text" placeholder="Nueva Tag" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
           <button onclick="addNewGlobalTag('job')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
         </div>
         <div id="modalJobTagsList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1"></div>
       </div>
-
       <input id="jobDiscord" type="text" placeholder="Enlace de Invitación de Discord" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <div class="flex justify-end gap-3 pt-2">
         <button onclick="closeModals()" class="px-4 py-2 text-slate-400 text-sm hover:text-white">Cancelar</button>
@@ -272,6 +292,7 @@
     const CLIENT_ID = "1562651106218082354";
     const GLOBAL_COUNTER_KEY = "sebasowo_unique_discord_users_counter_v1";
     let isAdmin = false;
+    let currentSpotifyTrackId = "";
 
     let globalTags = JSON.parse(localStorage.getItem('sebas_global_tags') || '["Conditional Events", "Dueño", "Creador de eventos", "Minijuegos", "Mecánicas", "Java"]');
     let selectedModalTags = [];
@@ -410,8 +431,14 @@
       }
     }
 
-    // --- LANYARD EN VIVO CON SPOTIFY Y JUEGOS ---
+    // --- CONEXIÓN LANYARD REALTIME CON REPRODUCTOR SPOTIFY EN VIVO Y ACTIVIDADES ---
     function connectLanyardStatus() {
+      // Intentar primero por API REST por si tarda el WebSocket
+      fetch(`https://api.lanyard.rest/v1/users/${MY_DISCORD_ID}`)
+        .then(res => res.json())
+        .then(res => { if (res.data) updateDiscordCard(res.data); })
+        .catch(() => {});
+
       const ws = new WebSocket('wss://api.lanyard.rest/socket');
       ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: MY_DISCORD_ID } }));
       ws.onmessage = (event) => {
@@ -425,45 +452,77 @@
       const avatar = document.getElementById('dcAvatar');
       const dot = document.getElementById('dcStatusDot');
       const username = document.getElementById('dcUsername');
-      const activity = document.getElementById('dcActivity');
+      const customStatus = document.getElementById('dcCustomStatus');
+      const actCard = document.getElementById('dcActivityCard');
+      const actIcon = document.getElementById('dcActIcon');
+      const actName = document.getElementById('dcActName');
+      const actDetails = document.getElementById('dcActDetails');
+      const actState = document.getElementById('dcActState');
+      const spotifyContainer = document.getElementById('spotifyContainer');
+      const spotifyWrapper = document.getElementById('spotifyEmbedWrapper');
 
-      // Nombre y avatar en tiempo real según tu cuenta de Discord
+      // Nombre y foto de Discord en tiempo real
       if (d.discord_user) {
         username.innerText = d.discord_user.username;
         avatar.src = `https://cdn.discordapp.com/avatars/${MY_DISCORD_ID}/${d.discord_user.avatar}.png`;
       }
 
-      // Indicador de Estado
-      dot.className = `absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#111827] status-${d.discord_status || 'offline'}`;
+      // Estado de conexión (Verde, Amarillo, Rojo, Gris)
+      dot.className = `absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-[#18191c] status-${d.discord_status || 'offline'}`;
 
-      // Si estás escuchando Spotify
-      if (d.listening_to_spotify && d.spotify) {
-        activity.innerHTML = `🎵 Escuchando <strong>${d.spotify.song}</strong> - ${d.spotify.artist}`;
-        return;
+      // Estado personalizado (Emoji / Texto)
+      const customAct = d.activities ? d.activities.find(a => a.type === 4) : null;
+      if (customAct) {
+        let statusText = "";
+        if (customAct.emoji) statusText += `${customAct.emoji.name} `;
+        if (customAct.state) statusText += customAct.state;
+        customStatus.innerHTML = `<span>${statusText}</span>`;
+      } else {
+        customStatus.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Sin estado personalizado';
       }
 
-      // Si estás jugando a un juego
-      if (d.activities && d.activities.length > 0) {
-        const game = d.activities.find(a => a.type !== 4);
-        if (game) {
-          const details = game.details ? ` (${game.details})` : '';
-          activity.innerHTML = `🎮 Jugando a <strong>${game.name}</strong>${details}`;
-          return;
+      // 1. REPRODUCTOR EN VIVO DE SPOTIFY
+      if (d.listening_to_spotify && d.spotify && d.spotify.track_id) {
+        spotifyContainer.classList.remove('hidden');
+        if (currentSpotifyTrackId !== d.spotify.track_id) {
+          currentSpotifyTrackId = d.spotify.track_id;
+          spotifyWrapper.innerHTML = `<iframe src="https://open.spotify.com/embed/track/${d.spotify.track_id}?utm_source=generator&theme=0" width="100%" height="80" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>`;
         }
+      } else {
+        spotifyContainer.classList.add('hidden');
+        currentSpotifyTrackId = "";
       }
 
-      // Sin actividad
-      activity.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Conectado (Sin actividad)';
+      // 2. ACTIVIDAD DE JUEGO / INTELLIJ / PROCESOS
+      const gameAct = d.activities ? d.activities.find(a => a.type !== 4) : null;
+      if (gameAct) {
+        actCard.classList.remove('hidden');
+        actName.innerText = gameAct.name;
+        actDetails.innerText = gameAct.details || "";
+        actState.innerText = gameAct.state || "";
+
+        if (gameAct.assets && gameAct.assets.large_image) {
+          actIcon.classList.remove('hidden');
+          if (gameAct.assets.large_image.startsWith('mp:external/')) {
+            actIcon.src = `https://media.discordapp.net/${gameAct.assets.large_image.replace('mp:', '')}`;
+          } else {
+            actIcon.src = `https://cdn.discordapp.com/app-assets/${gameAct.application_id}/${gameAct.assets.large_image}.png`;
+          }
+        } else {
+          actIcon.classList.add('hidden');
+        }
+      } else {
+        actCard.classList.add('hidden');
+      }
     }
 
-    // --- MANEJO DE TAGS (SELECCIONAR Y ELIMINAR GLOBALES) ---
+    // --- MANEJO DE TAGS ---
     function renderModalTags(type) {
       const container = document.getElementById(type === 'proj' ? 'modalProjTagsList' : 'modalJobTagsList');
       container.innerHTML = '';
 
       globalTags.forEach(tag => {
         const isSelected = selectedModalTags.includes(tag);
-        
         const wrapper = document.createElement('div');
         wrapper.className = `inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full border transition-all ${isSelected ? 'bg-blue-600 border-blue-500 text-white font-semibold' : 'bg-slate-900 border-slate-800 text-slate-400'}`;
 
