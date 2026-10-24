@@ -8,6 +8,9 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons -->
   <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
     body {
@@ -111,7 +114,7 @@
 
       <div class="md:col-span-7 space-y-4 text-slate-300">
         <p>Soy desarrollador especializado en Minecraft y el lenguaje del plugin <strong>Conditional Events</strong> creado por Ajneb97.</p>
-        <p>Tambien estoy aprendiendo a hacer mods en <strong>fabric</strong> y vendiendolos en mi kofi. https://ko-fi.com/tunkistudio</p>
+        <p>Tambien estoy aprendiendo a hacer mods en <strong>fabric</strong> y vendiendolos en mi kofi: <a href="https://ko-fi.com/tunkistudio" target="_blank" class="text-blue-400 underline font-semibold hover:text-blue-300">https://ko-fi.com/tunkistudio</a></p>
         <p>Me gusta crear experiencias inspiradas en grandes eventos y servidores personalizados como Eufonia Studio.</p>
 
         <!-- DISCORD ACTIVITY CARD ESTILO COMPLETO DE DISCORD -->
@@ -278,29 +281,26 @@
   </div>
 
   <script>
+    // --- CONEXIÓN DIRECTA A TU BASE DE DATOS FIREBASE ---
+    const firebaseConfig = {
+      databaseURL: "https://portafolio-dc348-default-rtdb.firebaseio.com"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
     const MY_DISCORD_ID = "1020476252513120306";
     const CLIENT_ID = "1562651106218082354";
     const GLOBAL_COUNTER_KEY = "sebasowo_unique_discord_users_counter_v1";
     let isAdmin = false;
     let currentSpotifyTrackId = "";
 
-    let globalTags = JSON.parse(localStorage.getItem('sebas_global_tags') || '["Conditional Events", "Dueño", "Creador de eventos", "Minijuegos", "Mecánicas", "Java"]');
+    let globalTags = ["Conditional Events", "Dueño", "Creador de eventos", "Minijuegos", "Mecánicas", "Java", "Mods"];
+    let dbProjects = [];
+    let dbJobs = [];
+    let dbTestimonials = [];
     let selectedModalTags = [];
     let activeProjTagFilter = "Todos";
-
-    const defaultProjects = [
-      { title: "El Hormiguero 🐜", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de selección de equipos automáticos, comandos y mecánicas.", client: "Tunki Studio", tags: ["Conditional Events", "Mecánicas"] },
-      { title: "El Hoyo 🕳️", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de TP a camas aleatorio, agarrar comida y mecánicas avanzadas.", client: "Capybara Studio", tags: ["Minijuegos", "Mecánicas"] }
-    ];
-
-    const defaultJobs = [
-      { iconImg: "", name: "Tunki Studio", role: "Co-Founder y developer", desc: "Desarrollo sistemas personalizados, automatizaciones, interfaces visuales y mecánicas para mis eventos.", discord: "https://discord.gg" },
-      { iconImg: "", name: "Capybara Studio", role: "Developer", desc: "Configuro minijuegos y mecánicas personalizadas.", discord: "https://discord.gg" }
-    ];
-
-    const defaultTestimonials = [
-      { name: "Tunki Staff", role: "Owner de Servidor", comment: "Excelente desarrollador, entregó las mecánicas a tiempo y sin ningún tipo de error." }
-    ];
 
     lucide.createIcons();
 
@@ -308,9 +308,42 @@
       fetchGlobalCounter();
       checkAuth();
       connectLanyardStatus();
-      loadAboutImage();
-      loadCustomContent();
+      syncFirebaseData();
     });
+
+    // --- SINCRONIZACIÓN EN TIEMPO REAL CON FIREBASE ---
+    function syncFirebaseData() {
+      // Sincronizar Tags
+      db.ref('portfolio/tags').on('value', snapshot => {
+        if (snapshot.exists()) globalTags = snapshot.val();
+        renderTagFilters('proj', activeProjTagFilter, (t) => { activeProjTagFilter = t; renderProjectsUI(); });
+      });
+
+      // Sincronizar Proyectos
+      db.ref('portfolio/projects').on('value', snapshot => {
+        dbProjects = snapshot.val() ? Object.entries(snapshot.val()).map(([key, value]) => ({ key, ...value })) : [];
+        renderProjectsUI();
+      });
+
+      // Sincronizar Trabajos
+      db.ref('portfolio/jobs').on('value', snapshot => {
+        dbJobs = snapshot.val() ? Object.entries(snapshot.val()).map(([key, value]) => ({ key, ...value })) : [];
+        renderJobsUI();
+      });
+
+      // Sincronizar Testimonios
+      db.ref('portfolio/testimonials').on('value', snapshot => {
+        dbTestimonials = snapshot.val() ? Object.entries(snapshot.val()).map(([key, value]) => ({ key, ...value })) : [];
+        renderTestimonialsUI();
+      });
+
+      // Sincronizar Foto de Acerca de mí
+      db.ref('portfolio/aboutImg').on('value', snapshot => {
+        if (snapshot.exists()) {
+          document.getElementById('aboutAvatarImg').src = snapshot.val();
+        }
+      });
+    }
 
     function fetchGlobalCounter() {
       fetch(`https://countapi.mileshilliard.com/api/v1/get/${GLOBAL_COUNTER_KEY}`)
@@ -396,7 +429,9 @@
         document.getElementById('addJobBtn').classList.remove('hidden');
         document.getElementById('addTestimonialBtn').classList.remove('hidden');
         document.getElementById('changeAboutImgBtn').classList.remove('hidden');
-        loadCustomContent();
+        renderProjectsUI();
+        renderJobsUI();
+        renderTestimonialsUI();
       }
     }
 
@@ -407,20 +442,13 @@
         reader.onload = function(evt) {
           const base64Img = evt.target.result;
           document.getElementById('aboutAvatarImg').src = base64Img;
-          localStorage.setItem('sebas_about_avatar', base64Img);
+          db.ref('portfolio/aboutImg').set(base64Img);
         };
         reader.readAsDataURL(file);
       }
     }
 
-    function loadAboutImage() {
-      const savedImg = localStorage.getItem('sebas_about_avatar');
-      if (savedImg) {
-        document.getElementById('aboutAvatarImg').src = savedImg;
-      }
-    }
-
-    // --- CONEXIÓN LANYARD REALTIME ---
+    // --- LANYARD CONEXIÓN DISCORD ---
     function connectLanyardStatus() {
       fetch(`https://api.lanyard.rest/v1/users/${MY_DISCORD_ID}`)
         .then(res => res.json())
@@ -450,16 +478,13 @@
       const spotifyContainer = document.getElementById('spotifyContainer');
       const spotifyWrapper = document.getElementById('spotifyEmbedWrapper');
 
-      // Nombre y foto de Discord
       if (d.discord_user) {
         username.innerText = d.discord_user.username;
         avatar.src = `https://cdn.discordapp.com/avatars/${MY_DISCORD_ID}/${d.discord_user.avatar}.png`;
       }
 
-      // Estado de conexión
       dot.className = `absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-[#18191c] status-${d.discord_status || 'offline'}`;
 
-      // Estado personalizado
       const customAct = d.activities ? d.activities.find(a => a.type === 4) : null;
       if (customAct) {
         let statusText = "";
@@ -470,7 +495,6 @@
         customStatus.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Sin estado personalizado';
       }
 
-      // 1. SPOTIFY EN VIVO
       if (d.listening_to_spotify && d.spotify && d.spotify.track_id) {
         spotifyContainer.classList.remove('hidden');
         if (currentSpotifyTrackId !== d.spotify.track_id) {
@@ -482,7 +506,6 @@
         currentSpotifyTrackId = "";
       }
 
-      // 2. ACTIVIDAD DE JUEGO / INTELLIJ
       const gameAct = d.activities ? d.activities.find(a => a.type !== 4 && a.name.toLowerCase() !== 'spotify') : null;
       if (gameAct) {
         actCard.classList.remove('hidden');
@@ -512,8 +535,8 @@
       }
     }
 
-    // --- MANEJO DE TAGS SOLO PARA PROYECTOS ---
-    function renderModalTags(type) {
+    // --- ACCIONES ADMIN EN BASE DE DATOS ---
+    function renderModalTags() {
       const container = document.getElementById('modalProjTagsList');
       if (!container) return;
       container.innerHTML = '';
@@ -532,7 +555,7 @@
           } else {
             selectedModalTags.push(tag);
           }
-          renderModalTags(type);
+          renderModalTags();
         };
 
         const deleteBtn = document.createElement('button');
@@ -542,7 +565,6 @@
         deleteBtn.onclick = (e) => {
           e.stopPropagation();
           deleteGlobalTag(tag);
-          renderModalTags(type);
         };
 
         wrapper.appendChild(tagBtn);
@@ -554,33 +576,24 @@
     function deleteGlobalTag(tagToDelete) {
       globalTags = globalTags.filter(t => t !== tagToDelete);
       selectedModalTags = selectedModalTags.filter(t => t !== tagToDelete);
-      localStorage.setItem('sebas_global_tags', JSON.stringify(globalTags));
-      loadCustomContent();
+      db.ref('portfolio/tags').set(globalTags);
+      renderModalTags();
     }
 
-    function addNewGlobalTag(type) {
+    function addNewGlobalTag() {
       const input = document.getElementById('newProjTagInput');
       const val = input.value.trim();
       if (val && !globalTags.includes(val)) {
         globalTags.push(val);
         selectedModalTags.push(val);
-        localStorage.setItem('sebas_global_tags', JSON.stringify(globalTags));
+        db.ref('portfolio/tags').set(globalTags);
         input.value = '';
-        renderModalTags(type);
-        loadCustomContent();
+        renderModalTags();
       }
     }
 
-    function openProjectModal() { 
-      selectedModalTags = [];
-      renderModalTags('proj');
-      document.getElementById('projectModal').classList.remove('hidden'); 
-    }
-
-    function openJobModal() { 
-      document.getElementById('jobModal').classList.remove('hidden'); 
-    }
-
+    function openProjectModal() { selectedModalTags = []; renderModalTags(); document.getElementById('projectModal').classList.remove('hidden'); }
+    function openJobModal() { document.getElementById('jobModal').classList.remove('hidden'); }
     function openTestimonialModal() { document.getElementById('testimonialModal').classList.remove('hidden'); }
 
     function closeModals() {
@@ -596,18 +609,12 @@
       const client = document.getElementById('projClient').value;
       if (!title) return;
 
-      const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
-      projects.push({ title, video, desc, client, tags: [...selectedModalTags] });
-      localStorage.setItem('custom_projects', JSON.stringify(projects));
+      db.ref('portfolio/projects').push({ title, video, desc, client, tags: [...selectedModalTags] });
       closeModals();
-      loadCustomContent();
     }
 
-    function deleteProject(index) {
-      const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
-      projects.splice(index, 1);
-      localStorage.setItem('custom_projects', JSON.stringify(projects));
-      loadCustomContent();
+    function deleteProject(key) {
+      db.ref(`portfolio/projects/${key}`).remove();
     }
 
     function saveJob() {
@@ -619,11 +626,8 @@
       if (!name) return;
 
       const processSave = (iconImgData) => {
-        const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
-        jobs.push({ iconImg: iconImgData, name, role, desc, discord });
-        localStorage.setItem('custom_jobs', JSON.stringify(jobs));
+        db.ref('portfolio/jobs').push({ iconImg: iconImgData, name, role, desc, discord });
         closeModals();
-        loadCustomContent();
       };
 
       if (iconInput.files && iconInput.files[0]) {
@@ -635,11 +639,8 @@
       }
     }
 
-    function deleteJob(index) {
-      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
-      jobs.splice(index, 1);
-      localStorage.setItem('custom_jobs', JSON.stringify(jobs));
-      loadCustomContent();
+    function deleteJob(key) {
+      db.ref(`portfolio/jobs/${key}`).remove();
     }
 
     function saveTestimonial() {
@@ -648,18 +649,12 @@
       const comment = document.getElementById('testiComment').value;
       if (!name) return;
 
-      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
-      testimonials.push({ name, role, comment });
-      localStorage.setItem('custom_testimonials', JSON.stringify(testimonials));
+      db.ref('portfolio/testimonials').push({ name, role, comment });
       closeModals();
-      loadCustomContent();
     }
 
-    function deleteTestimonial(index) {
-      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
-      testimonials.splice(index, 1);
-      localStorage.setItem('custom_testimonials', JSON.stringify(testimonials));
-      loadCustomContent();
+    function deleteTestimonial(key) {
+      db.ref(`portfolio/testimonials/${key}`).remove();
     }
 
     function renderTagFilters(type, activeTag, setFilterFn) {
@@ -678,19 +673,15 @@
       });
     }
 
-    function loadCustomContent() {
+    // --- RENDERIZADO DE INTERFAZ DESDE LA NUBE ---
+    function renderProjectsUI() {
       const getMediaHTML = (url) => {
         if (!url) return `<div class="w-full h-full bg-slate-900 flex items-center justify-center text-slate-600 text-xs">Sin video</div>`;
-        
         if (url.includes('youtube.com') || url.includes('youtu.be')) {
           let videoId = "";
-          if (url.includes('youtu.be/')) {
-            videoId = url.split('youtu.be/')[1]?.split('?')[0];
-          } else if (url.includes('watch?v=')) {
-            videoId = url.split('watch?v=')[1]?.split('&')[0];
-          } else if (url.includes('embed/')) {
-            videoId = url.split('embed/')[1]?.split('?')[0];
-          }
+          if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1]?.split('?')[0];
+          else if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1]?.split('&')[0];
+          else if (url.includes('embed/')) videoId = url.split('embed/')[1]?.split('?')[0];
 
           if (videoId) {
             return `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
@@ -699,20 +690,17 @@
         return `<video class="w-full h-full object-cover" controls src="${url}"></video>`;
       };
 
-      // Proyectos
-      renderTagFilters('proj', activeProjTagFilter, (tag) => { activeProjTagFilter = tag; loadCustomContent(); });
-      const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
       const projGrid = document.getElementById('projectsGrid');
       projGrid.innerHTML = '';
       
-      projects.forEach((p, idx) => {
+      dbProjects.forEach(p => {
         const pTags = p.tags || [];
         if (activeProjTagFilter !== "Todos" && !pTags.includes(activeProjTagFilter)) return;
 
         const card = document.createElement('div');
         card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col relative group";
         card.innerHTML = `
-          ${isAdmin ? `<button onclick="deleteProject(${idx})" class="absolute top-2 right-2 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
+          ${isAdmin ? `<button onclick="deleteProject('${p.key}')" class="absolute top-2 right-2 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
           <div class="aspect-video bg-black relative">${getMediaHTML(p.video)}</div>
           <div class="p-5 flex-1 flex flex-col justify-between">
             <div>
@@ -727,13 +715,13 @@
         `;
         projGrid.appendChild(card);
       });
+    }
 
-      // Trabajos (Sin tags)
-      const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
+    function renderJobsUI() {
       const jobsGrid = document.getElementById('jobsGrid');
       jobsGrid.innerHTML = '';
 
-      jobs.forEach((j, idx) => {
+      dbJobs.forEach(j => {
         const card = document.createElement('div');
         card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between relative";
         
@@ -742,7 +730,7 @@
           : `<div class="w-12 h-12 bg-blue-500/20 border border-blue-500/30 rounded-xl flex items-center justify-center text-blue-400 font-bold text-xl">💼</div>`;
 
         card.innerHTML = `
-          ${isAdmin ? `<button onclick="deleteJob(${idx})" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
+          ${isAdmin ? `<button onclick="deleteJob('${j.key}')" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
           <div>
             <div class="flex items-center gap-4 mb-4">
               ${iconHTML}
@@ -757,16 +745,16 @@
         `;
         jobsGrid.appendChild(card);
       });
+    }
 
-      // Testimonios
-      const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
+    function renderTestimonialsUI() {
       const testiGrid = document.getElementById('testimonialsGrid');
       testiGrid.innerHTML = '';
-      testimonials.forEach((t, idx) => {
+      dbTestimonials.forEach(t => {
         const card = document.createElement('div');
         card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl relative";
         card.innerHTML = `
-          ${isAdmin ? `<button onclick="deleteTestimonial(${idx})" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
+          ${isAdmin ? `<button onclick="deleteTestimonial('${t.key}')" class="absolute top-4 right-4 bg-red-600/80 hover:bg-red-600 text-white p-2 rounded-xl text-xs z-10 transition-all shadow-lg">🗑️ Borrar</button>` : ''}
           <p class="text-slate-300 text-sm italic mb-4">"${t.comment}"</p>
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 bg-slate-800 rounded-full flex items-center justify-center font-bold text-blue-400">${t.name.charAt(0)}</div>
