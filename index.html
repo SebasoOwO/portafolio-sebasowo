@@ -85,7 +85,7 @@
     <div class="flex flex-wrap items-center justify-center gap-4">
       <a href="#proyectos" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition-all shadow-lg shadow-blue-600/20">Ver Proyectos</a>
       <a href="#contacto" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all border border-slate-700">Contáctame</a>
-      <a href="https://www.twitch.tv/sebas_owo1" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
+      <a href="https://twitch.tv" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
         Twitch
       </a>
@@ -186,7 +186,6 @@
         <i data-lucide="plus" class="w-4 h-4"></i> Añadir Trabajo
       </button>
     </div>
-    <div id="jobTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
     <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
 
@@ -256,14 +255,6 @@
       <input id="jobName" type="text" placeholder="Nombre de la empresa/studio" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <input id="jobRole" type="text" placeholder="Tu Rol (Ej: Lead Developer)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <textarea id="jobDesc" placeholder="Descripción de tus labores" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-20"></textarea>
-      <div>
-        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags</label>
-        <div class="flex gap-2 mb-2">
-          <input id="newJobTagInput" type="text" placeholder="Nueva Tag" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
-          <button onclick="addNewGlobalTag('job')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
-        </div>
-        <div id="modalJobTagsList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1"></div>
-      </div>
       <input id="jobDiscord" type="text" placeholder="Enlace de Invitación de Discord" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <div class="flex justify-end gap-3 pt-2">
         <button onclick="closeModals()" class="px-4 py-2 text-slate-400 text-sm hover:text-white">Cancelar</button>
@@ -295,7 +286,6 @@
     let globalTags = JSON.parse(localStorage.getItem('sebas_global_tags') || '["Conditional Events", "Dueño", "Creador de eventos", "Minijuegos", "Mecánicas", "Java"]');
     let selectedModalTags = [];
     let activeProjTagFilter = "Todos";
-    let activeJobTagFilter = "Todos";
 
     const defaultProjects = [
       { title: "El Hormiguero 🐜", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de selección de equipos automáticos, comandos y mecánicas.", client: "Tunki Studio", tags: ["Conditional Events", "Mecánicas"] },
@@ -303,8 +293,8 @@
     ];
 
     const defaultJobs = [
-      { iconImg: "", name: "Tunki Studio", role: "Co-Founder y developer", desc: "Desarrollo sistemas personalizados, automatizaciones, interfaces visuales y mecánicas para mis eventos.", tags: ["Conditional Events", "Dueño", "Creador de eventos"], discord: "https://discord.gg" },
-      { iconImg: "", name: "Capybara Studio", role: "Developer", desc: "Configuro minijuegos y mecánicas personalizadas.", tags: ["Minijuegos", "Mecánicas"], discord: "https://discord.gg" }
+      { iconImg: "", name: "Tunki Studio", role: "Co-Founder y developer", desc: "Desarrollo sistemas personalizados, automatizaciones, interfaces visuales y mecánicas para mis eventos.", discord: "https://discord.gg" },
+      { iconImg: "", name: "Capybara Studio", role: "Developer", desc: "Configuro minijuegos y mecánicas personalizadas.", discord: "https://discord.gg" }
     ];
 
     const defaultTestimonials = [
@@ -429,7 +419,7 @@
       }
     }
 
-    // --- CONEXIÓN LANYARD REALTIME SIN BUGS ---
+    // --- CONEXIÓN LANYARD REALTIME ---
     function connectLanyardStatus() {
       fetch(`https://api.lanyard.rest/v1/users/${MY_DISCORD_ID}`)
         .then(res => res.json())
@@ -465,10 +455,10 @@
         avatar.src = `https://cdn.discordapp.com/avatars/${MY_DISCORD_ID}/${d.discord_user.avatar}.png`;
       }
 
-      // Estado de conexión (Verde, Amarillo, Rojo, Gris)
+      // Estado de conexión
       dot.className = `absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-[#18191c] status-${d.discord_status || 'offline'}`;
 
-      // Estado personalizado (Emoji / Texto)
+      // Estado personalizado
       const customAct = d.activities ? d.activities.find(a => a.type === 4) : null;
       if (customAct) {
         let statusText = "";
@@ -479,7 +469,7 @@
         customStatus.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Sin estado personalizado';
       }
 
-      // 1. SPOTIFY EN VIVO (Exclusivo en el reproductor verde)
+      // 1. SPOTIFY EN VIVO
       if (d.listening_to_spotify && d.spotify && d.spotify.track_id) {
         spotifyContainer.classList.remove('hidden');
         if (currentSpotifyTrackId !== d.spotify.track_id) {
@@ -491,7 +481,7 @@
         currentSpotifyTrackId = "";
       }
 
-      // 2. ACTIVIDAD DE JUEGO / INTELLIJ / PROCESOS (EXCLUYENDO SPOTIFY DE ESTE CUADRO)
+      // 2. ACTIVIDAD DE JUEGO / INTELLIJ
       const gameAct = d.activities ? d.activities.find(a => a.type !== 4 && a.name.toLowerCase() !== 'spotify') : null;
       if (gameAct) {
         actCard.classList.remove('hidden');
@@ -510,7 +500,6 @@
         } else {
           actIcon.classList.add('hidden');
           fallbackIcon.classList.remove('hidden');
-          // Icono específico si es IntelliJ
           if (gameAct.name.toLowerCase().includes('intellij')) {
             fallbackIcon.innerText = "☕";
           } else {
@@ -522,9 +511,10 @@
       }
     }
 
-    // --- MANEJO DE TAGS ---
+    // --- MANEJO DE TAGS SOLO PARA PROYECTOS ---
     function renderModalTags(type) {
-      const container = document.getElementById(type === 'proj' ? 'modalProjTagsList' : 'modalJobTagsList');
+      const container = document.getElementById('modalProjTagsList');
+      if (!container) return;
       container.innerHTML = '';
 
       globalTags.forEach(tag => {
@@ -568,7 +558,7 @@
     }
 
     function addNewGlobalTag(type) {
-      const input = document.getElementById(type === 'proj' ? 'newProjTagInput' : 'newJobTagInput');
+      const input = document.getElementById('newProjTagInput');
       const val = input.value.trim();
       if (val && !globalTags.includes(val)) {
         globalTags.push(val);
@@ -587,8 +577,6 @@
     }
 
     function openJobModal() { 
-      selectedModalTags = [];
-      renderModalTags('job');
       document.getElementById('jobModal').classList.remove('hidden'); 
     }
 
@@ -631,7 +619,7 @@
 
       const processSave = (iconImgData) => {
         const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
-        jobs.push({ iconImg: iconImgData, name, role, desc, tags: [...selectedModalTags], discord });
+        jobs.push({ iconImg: iconImgData, name, role, desc, discord });
         localStorage.setItem('custom_jobs', JSON.stringify(jobs));
         closeModals();
         loadCustomContent();
@@ -674,7 +662,8 @@
     }
 
     function renderTagFilters(type, activeTag, setFilterFn) {
-      const container = document.getElementById(type === 'proj' ? 'projectTagsFilter' : 'jobTagsFilter');
+      const container = document.getElementById('projectTagsFilter');
+      if (!container) return;
       container.innerHTML = '';
 
       const tagsList = ["Todos", ...globalTags];
@@ -691,10 +680,20 @@
     function loadCustomContent() {
       const getMediaHTML = (url) => {
         if (!url) return `<div class="w-full h-full bg-slate-900 flex items-center justify-center text-slate-600 text-xs">Sin video</div>`;
+        
         if (url.includes('youtube.com') || url.includes('youtu.be')) {
-          let embedUrl = url;
-          if (url.includes('watch?v=')) embedUrl = url.replace('watch?v=', 'embed/');
-          return `<iframe class="w-full h-full" src="${embedUrl}" frameborder="0" allowfullscreen></iframe>`;
+          let videoId = "";
+          if (url.includes('youtu.be/')) {
+            videoId = url.split('youtu.be/')[1]?.split('?')[0];
+          } else if (url.includes('watch?v=')) {
+            videoId = url.split('watch?v=')[1]?.split('&')[0];
+          } else if (url.includes('embed/')) {
+            videoId = url.split('embed/')[1]?.split('?')[0];
+          }
+
+          if (videoId) {
+            return `<iframe class="w-full h-full" src="https://www.youtube-nocookie.com/embed/${videoId}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
+          }
         }
         return `<video class="w-full h-full object-cover" controls src="${url}"></video>`;
       };
@@ -728,16 +727,12 @@
         projGrid.appendChild(card);
       });
 
-      // Trabajos
-      renderTagFilters('job', activeJobTagFilter, (tag) => { activeJobTagFilter = tag; loadCustomContent(); });
+      // Trabajos (Sin tags)
       const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
       const jobsGrid = document.getElementById('jobsGrid');
       jobsGrid.innerHTML = '';
 
       jobs.forEach((j, idx) => {
-        const jTags = j.tags || [];
-        if (activeJobTagFilter !== "Todos" && !jTags.includes(activeJobTagFilter)) return;
-
         const card = document.createElement('div');
         card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between relative";
         
@@ -756,9 +751,6 @@
               </div>
             </div>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">${j.desc}</p>
-            <div class="flex flex-wrap gap-2 mb-6">
-              ${jTags.map(t => `<span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">${t}</span>`).join('')}
-            </div>
           </div>
           <a href="${j.discord || '#'}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition-all text-center text-xs block">Unirse al Discord</a>
         `;
