@@ -116,7 +116,7 @@
         <p>Me gusta crear experiencias inspiradas en grandes eventos y servidores personalizados como Eufonia Studio.</p>
         <p>También trabajo con variables usando el plugin <strong>ServerVariables</strong> y sistemas avanzados para servidores.</p>
 
-        <!-- DISCORD STATUS WIDGET (LANYARD REALTIME - DISCORD ID: 1020476252513120306) -->
+        <!-- DISCORD STATUS WIDGET (LANYARD REALTIME) -->
         <div class="pt-4">
           <div id="discordStatusCard" class="bg-[#111827] border border-slate-800 rounded-2xl p-4 flex items-center gap-4 max-w-md shadow-xl">
             <div class="relative">
@@ -146,7 +146,6 @@
     </div>
 
     <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Proyectos por defecto -->
       <div class="bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col">
         <div class="aspect-video bg-black relative">
           <iframe class="w-full h-full" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="El Hormiguero" frameborder="0" allowfullscreen></iframe>
@@ -185,7 +184,6 @@
     </div>
 
     <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Trabajos por defecto -->
       <div class="bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
         <div>
           <div class="flex items-center gap-4 mb-4">
@@ -218,7 +216,7 @@
               <p class="text-blue-400 text-xs font-medium">Developer</p>
             </div>
           </div>
-          <p class="text-slate-400 text-xs leading-relaxed mb-6">Configuro minijuegos y mecánicas personalizadas para eventos.</p>
+          <p class="text-slate-400 text-xs leading-relaxed mb-6">Configuro minijuegos y mecánicas personalizadas.</p>
           <div class="flex flex-wrap gap-2 mb-6">
             <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Minijuegos</span>
             <span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">Mecánicas</span>
@@ -268,7 +266,7 @@
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Proyecto</h3>
       <input id="projTitle" type="text" placeholder="Título del Proyecto" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-      <input id="projVideo" type="text" placeholder="URL de Video (mp4 o YouTube Embed/Link)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+      <input id="projVideo" type="text" placeholder="URL de Video (mp4 o YouTube Link)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <textarea id="projDesc" placeholder="Descripción breve" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-24"></textarea>
       <input id="projClient" type="text" placeholder="Hecho para (Ej: Tunki Studio)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <div class="flex justify-end gap-3 pt-2">
@@ -310,9 +308,9 @@
   </div>
 
   <script>
-    // Configuración constante
+    // CREDANCIALES DEFINIDAS INTERNAMENTE
     const MY_DISCORD_ID = "1020476252513120306";
-    const CLIENT_ID = "1562651106218082354"; // Tu Client ID configurado
+    const CLIENT_ID = "1562651106218082354";
 
     lucide.createIcons();
 
@@ -328,7 +326,6 @@
     });
 
     function loginWithDiscord() {
-      // Incrementar contador
       visits++;
       localStorage.setItem('sebas_visit_count', visits.toString());
 
@@ -416,10 +413,8 @@
         avatar.src = `https://cdn.discordapp.com/avatars/${MY_DISCORD_ID}/${d.discord_user.avatar}.png`;
       }
 
-      // Status colors
       dot.className = `absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#111827] status-${d.discord_status || 'offline'}`;
 
-      // Activity text
       if (d.activities && d.activities.length > 0) {
         const act = d.activities[0];
         activity.innerText = `${act.name}${act.details ? ' • ' + act.details : ''}`;
@@ -489,7 +484,6 @@
     }
 
     function loadCustomContent() {
-      // Formatear Embed de Youtube o Video
       const getMediaHTML = (url) => {
         if (!url) return `<div class="w-full h-full bg-slate-900 flex items-center justify-center text-slate-600 text-xs">Sin video</div>`;
         if (url.includes('youtube.com') || url.includes('youtu.be')) {
@@ -500,7 +494,6 @@
         return `<video class="w-full h-full object-cover" controls src="${url}"></video>`;
       };
 
-      // Cargar Proyectos
       const projects = JSON.parse(localStorage.getItem('custom_projects') || '[]');
       const projGrid = document.getElementById('projectsGrid');
       projects.forEach(p => {
@@ -519,7 +512,6 @@
         projGrid.appendChild(card);
       });
 
-      // Cargar Trabajos
       const jobs = JSON.parse(localStorage.getItem('custom_jobs') || '[]');
       const jobsGrid = document.getElementById('jobsGrid');
       jobs.forEach(j => {
@@ -544,7 +536,6 @@
         jobsGrid.appendChild(card);
       });
 
-      // Cargar Testimonios
       const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || '[]');
       const testiGrid = document.getElementById('testimonialsGrid');
       testimonials.forEach(t => {
