@@ -26,7 +26,7 @@
 </head>
 <body class="relative min-h-screen selection:bg-blue-600 selection:text-white">
 
-  <!-- ==================== GATEWAY DE ENTRADA (MANDATORY DISCORD) ==================== -->
+  <!-- GATEWAY DE ENTRADA (DISCORD) -->
   <div id="discordGate" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 blur-gate p-4">
     <div class="bg-[#111827] border border-blue-900/50 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl relative overflow-hidden">
       <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl"></div>
@@ -91,7 +91,6 @@
       <a href="#contacto" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all border border-slate-700">
         Contáctame
       </a>
-      <!-- BOTÓN TWITCH -->
       <a href="https://twitch.tv" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
           <path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
@@ -108,17 +107,13 @@
       <div class="md:col-span-5 flex justify-center">
         <div class="relative group">
           <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-2xl blur opacity-30 group-hover:opacity-60 transition duration-300"></div>
-          
-          <!-- Avatar con botón de cambiar icono solo para Admin -->
           <div class="relative">
             <img id="aboutAvatarImg" src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=500" alt="Skin Minecraft" class="relative rounded-2xl border border-slate-800 w-full max-w-[300px] aspect-square object-cover shadow-2xl">
-            
             <button id="changeAboutImgBtn" onclick="document.getElementById('aboutImgFileInput').click()" class="hidden absolute bottom-3 right-3 bg-blue-600 hover:bg-blue-500 text-white p-2.5 rounded-xl shadow-xl transition-all flex items-center gap-2 text-xs font-semibold">
               <i data-lucide="camera" class="w-4 h-4"></i> Cambiar
             </button>
             <input type="file" id="aboutImgFileInput" accept="image/*" class="hidden" onchange="uploadAboutImage(event)">
           </div>
-
         </div>
       </div>
       <div class="md:col-span-7 space-y-4 text-slate-300">
@@ -126,7 +121,7 @@
         <p>Me gusta crear experiencias inspiradas en grandes eventos y servidores personalizados como Eufonia Studio.</p>
         <p>También trabajo con variables usando el plugin <strong>ServerVariables</strong> y sistemas avanzados para servidores.</p>
 
-        <!-- DISCORD STATUS WIDGET (LANYARD REALTIME) -->
+        <!-- DISCORD STATUS WIDGET -->
         <div class="pt-4">
           <div id="discordStatusCard" class="bg-[#111827] border border-slate-800 rounded-2xl p-4 flex items-center gap-4 max-w-md shadow-xl">
             <div class="relative">
@@ -148,24 +143,30 @@
 
   <!-- MIS PROYECTOS -->
   <section id="proyectos" class="max-w-5xl mx-auto px-4 py-16 border-t border-slate-800/60">
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <h2 class="text-3xl font-extrabold text-blue-500">Mis Proyectos más importantes</h2>
-      <button id="addProjectBtn" onclick="openProjectModal()" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20">
+      <button id="addProjectBtn" onclick="openProjectModal()" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20 self-start md:self-auto">
         <i data-lucide="plus" class="w-4 h-4"></i> Añadir Proyecto
       </button>
     </div>
+
+    <!-- Filtro de Tags para Proyectos -->
+    <div id="projectTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
 
     <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
   </section>
 
   <!-- TRABAJO EN -->
   <section id="trabajo" class="max-w-5xl mx-auto px-4 py-16 border-t border-slate-800/60">
-    <div class="flex items-center justify-between mb-8">
+    <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
       <h2 class="text-3xl font-extrabold text-blue-500">Actualmente Trabajo En</h2>
-      <button id="addJobBtn" onclick="openJobModal()" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20">
+      <button id="addJobBtn" onclick="openJobModal()" class="hidden bg-blue-600 hover:bg-blue-500 text-white font-medium text-sm px-4 py-2 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-blue-600/20 self-start md:self-auto">
         <i data-lucide="plus" class="w-4 h-4"></i> Añadir Trabajo
       </button>
     </div>
+
+    <!-- Filtro de Tags para Trabajo -->
+    <div id="jobTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
 
     <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
@@ -192,7 +193,6 @@
       </a>
     </div>
 
-    <!-- CONTADOR GLOBAL LIMPIO (VISIBLE PARA TODOS) -->
     <div class="pt-8 border-t border-slate-800/40 flex flex-col items-center justify-center gap-2">
       <div class="inline-flex items-center gap-3 bg-[#111827] border border-slate-800/80 px-6 py-3 rounded-2xl shadow-xl">
         <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
@@ -203,14 +203,27 @@
     </div>
   </footer>
 
-  <!-- MODALES ADMIN -->
+  <!-- ==================== MODALES ADMIN ==================== -->
+  
+  <!-- MODAL PROYECTO -->
   <div id="projectModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Proyecto</h3>
       <input id="projTitle" type="text" placeholder="Título del Proyecto" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <input id="projVideo" type="text" placeholder="URL de Video (mp4 o YouTube Link)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
-      <textarea id="projDesc" placeholder="Descripción breve" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-24"></textarea>
+      <textarea id="projDesc" placeholder="Descripción breve" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-20"></textarea>
       <input id="projClient" type="text" placeholder="Hecho para (Ej: Tunki Studio)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+      
+      <!-- Selector/Creador de Tags -->
+      <div>
+        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags para este Proyecto</label>
+        <div class="flex gap-2 mb-2">
+          <input id="newProjTagInput" type="text" placeholder="Nueva Tag (Ej: Plugins)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
+          <button onclick="addNewGlobalTag('proj')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
+        </div>
+        <div id="modalProjTagsList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1"></div>
+      </div>
+
       <div class="flex justify-end gap-3 pt-2">
         <button onclick="closeModals()" class="px-4 py-2 text-slate-400 text-sm hover:text-white">Cancelar</button>
         <button onclick="saveProject()" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-5 py-2 rounded-xl">Guardar</button>
@@ -218,11 +231,11 @@
     </div>
   </div>
 
+  <!-- MODAL TRABAJO -->
   <div id="jobModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Trabajo</h3>
       
-      <!-- SUBIR ARCHIVO DE ICONO -->
       <div>
         <label class="block text-slate-400 text-xs mb-1.5 font-medium">Icono del Trabajo (Subir Imagen)</label>
         <input type="file" id="jobIconFile" accept="image/*" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2 text-xs text-slate-300 file:mr-4 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-500">
@@ -231,7 +244,17 @@
       <input id="jobName" type="text" placeholder="Nombre de la empresa/studio" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <input id="jobRole" type="text" placeholder="Tu Rol (Ej: Lead Developer)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <textarea id="jobDesc" placeholder="Descripción de tus labores" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500 h-20"></textarea>
-      <input id="jobTags" type="text" placeholder="Etiquetas separadas por coma (Ej: Events, Java)" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
+      
+      <!-- Selector/Creador de Tags -->
+      <div>
+        <label class="block text-slate-400 text-xs mb-1.5 font-medium">Asignar / Crear Tags para este Trabajo</label>
+        <div class="flex gap-2 mb-2">
+          <input id="newJobTagInput" type="text" placeholder="Nueva Tag (Ej: Minijuegos)" class="flex-1 bg-slate-900 border border-slate-800 rounded-xl px-3 py-1.5 text-xs text-white focus:outline-none focus:border-blue-500">
+          <button onclick="addNewGlobalTag('job')" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-3 rounded-xl">+ Añadir</button>
+        </div>
+        <div id="modalJobTagsList" class="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto p-1"></div>
+      </div>
+
       <input id="jobDiscord" type="text" placeholder="Enlace de Invitación de Discord" class="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500">
       <div class="flex justify-end gap-3 pt-2">
         <button onclick="closeModals()" class="px-4 py-2 text-slate-400 text-sm hover:text-white">Cancelar</button>
@@ -240,6 +263,7 @@
     </div>
   </div>
 
+  <!-- MODAL TESTIMONIO -->
   <div id="testimonialModal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-[#111827] border border-slate-800 rounded-2xl p-6 max-w-lg w-full shadow-2xl space-y-4">
       <h3 class="text-xl font-bold text-white">Añadir Nuevo Testimonio</h3>
@@ -259,10 +283,19 @@
     const GLOBAL_COUNTER_KEY = "sebasowo_unique_discord_users_counter_v1";
     let isAdmin = false;
 
-    // Datos por defecto
+    // Tags Globales por defecto
+    let globalTags = JSON.parse(localStorage.getItem('sebas_global_tags') || '["Conditional Events", "Dueño", "Creador de eventos", "Minijuegos", "Mecánicas", "Java"]');
+
+    // Estado de selección temporal en modales
+    let selectedModalTags = [];
+
+    // Filtros activos en las secciones
+    let activeProjTagFilter = "Todos";
+    let activeJobTagFilter = "Todos";
+
     const defaultProjects = [
-      { title: "El Hormiguero 🐜", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de selección de equipos automáticos, comandos y mecánicas.", client: "Tunki Studio" },
-      { title: "El Hoyo 🕳️", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de TP a camas aleatorio, agarrar comida y mecánicas avanzadas.", client: "Capybara Studio" }
+      { title: "El Hormiguero 🐜", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de selección de equipos automáticos, comandos y mecánicas.", client: "Tunki Studio", tags: ["Conditional Events", "Mecánicas"] },
+      { title: "El Hoyo 🕳️", video: "https://www.youtube.com/embed/dQw4w9WgXcQ", desc: "Sistema de TP a camas aleatorio, agarrar comida y mecánicas avanzadas.", client: "Capybara Studio", tags: ["Minijuegos", "Mecánicas"] }
     ];
 
     const defaultJobs = [
@@ -372,7 +405,6 @@
       }
     }
 
-    // Subir y guardar foto de "Acerca de mí"
     function uploadAboutImage(e) {
       const file = e.target.files[0];
       if (file) {
@@ -424,8 +456,52 @@
       }
     }
 
-    function openProjectModal() { document.getElementById('projectModal').classList.remove('hidden'); }
-    function openJobModal() { document.getElementById('jobModal').classList.remove('hidden'); }
+    // --- SISTEMA DE TAGS GLOBAL Y DINÁMICO ---
+    function renderModalTags(type) {
+      const container = document.getElementById(type === 'proj' ? 'modalProjTagsList' : 'modalJobTagsList');
+      container.innerHTML = '';
+      globalTags.forEach(tag => {
+        const isSelected = selectedModalTags.includes(tag);
+        const tagChip = document.createElement('button');
+        tagChip.type = 'button';
+        tagChip.className = `text-xs px-2.5 py-1 rounded-full border transition-all ${isSelected ? 'bg-blue-600 border-blue-500 text-white font-semibold' : 'bg-slate-900 border-slate-800 text-slate-400 hover:text-slate-200'}`;
+        tagChip.innerText = tag;
+        tagChip.onclick = () => {
+          if (isSelected) {
+            selectedModalTags = selectedModalTags.filter(t => t !== tag);
+          } else {
+            selectedModalTags.push(tag);
+          }
+          renderModalTags(type);
+        };
+        container.appendChild(tagChip);
+      });
+    }
+
+    function addNewGlobalTag(type) {
+      const input = document.getElementById(type === 'proj' ? 'newProjTagInput' : 'newJobTagInput');
+      const val = input.value.trim();
+      if (val && !globalTags.includes(val)) {
+        globalTags.push(val);
+        selectedModalTags.push(val);
+        localStorage.setItem('sebas_global_tags', JSON.stringify(globalTags));
+        input.value = '';
+        renderModalTags(type);
+      }
+    }
+
+    function openProjectModal() { 
+      selectedModalTags = [];
+      renderModalTags('proj');
+      document.getElementById('projectModal').classList.remove('hidden'); 
+    }
+
+    function openJobModal() { 
+      selectedModalTags = [];
+      renderModalTags('job');
+      document.getElementById('jobModal').classList.remove('hidden'); 
+    }
+
     function openTestimonialModal() { document.getElementById('testimonialModal').classList.remove('hidden'); }
 
     function closeModals() {
@@ -442,7 +518,7 @@
       if (!title) return;
 
       const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
-      projects.push({ title, video, desc, client });
+      projects.push({ title, video, desc, client, tags: [...selectedModalTags] });
       localStorage.setItem('custom_projects', JSON.stringify(projects));
       closeModals();
       loadCustomContent();
@@ -460,13 +536,12 @@
       const name = document.getElementById('jobName').value;
       const role = document.getElementById('jobRole').value;
       const desc = document.getElementById('jobDesc').value;
-      const tags = document.getElementById('jobTags').value.split(',');
       const discord = document.getElementById('jobDiscord').value;
       if (!name) return;
 
       const processSave = (iconImgData) => {
         const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
-        jobs.push({ iconImg: iconImgData, name, role, desc, tags, discord });
+        jobs.push({ iconImg: iconImgData, name, role, desc, tags: [...selectedModalTags], discord });
         localStorage.setItem('custom_jobs', JSON.stringify(jobs));
         closeModals();
         loadCustomContent();
@@ -508,6 +583,21 @@
       loadCustomContent();
     }
 
+    function renderTagFilters(type, activeTag, setFilterFn) {
+      const container = document.getElementById(type === 'proj' ? 'projectTagsFilter' : 'jobTagsFilter');
+      container.innerHTML = '';
+
+      const tagsList = ["Todos", ...globalTags];
+      tagsList.forEach(t => {
+        const btn = document.createElement('button');
+        const isActive = activeTag === t;
+        btn.className = `text-xs px-3 py-1.5 rounded-full border transition-all ${isActive ? 'bg-blue-600 border-blue-500 text-white font-bold shadow-lg shadow-blue-600/20' : 'bg-[#111827] border-slate-800 text-slate-400 hover:text-white hover:border-slate-700'}`;
+        btn.innerText = t;
+        btn.onclick = () => setFilterFn(t);
+        container.appendChild(btn);
+      });
+    }
+
     function loadCustomContent() {
       const getMediaHTML = (url) => {
         if (!url) return `<div class="w-full h-full bg-slate-900 flex items-center justify-center text-slate-600 text-xs">Sin video</div>`;
@@ -519,11 +609,16 @@
         return `<video class="w-full h-full object-cover" controls src="${url}"></video>`;
       };
 
-      // Cargar Proyectos
+      // Cargar y filtrar Proyectos
+      renderTagFilters('proj', activeProjTagFilter, (tag) => { activeProjTagFilter = tag; loadCustomContent(); });
       const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
       const projGrid = document.getElementById('projectsGrid');
       projGrid.innerHTML = '';
+      
       projects.forEach((p, idx) => {
+        const pTags = p.tags || [];
+        if (activeProjTagFilter !== "Todos" && !pTags.includes(activeProjTagFilter)) return;
+
         const card = document.createElement('div');
         card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl overflow-hidden shadow-xl flex flex-col relative group";
         card.innerHTML = `
@@ -533,6 +628,9 @@
             <div>
               <h3 class="text-lg font-bold text-white mb-2">${p.title}</h3>
               <p class="text-slate-400 text-xs leading-relaxed mb-4">${p.desc}</p>
+              <div class="flex flex-wrap gap-1.5 mb-4">
+                ${pTags.map(t => `<span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-[10px] px-2.5 py-0.5 rounded-full">${t}</span>`).join('')}
+              </div>
             </div>
             <span class="text-blue-400 text-xs font-semibold">Hecho para ${p.client}</span>
           </div>
@@ -540,11 +638,16 @@
         projGrid.appendChild(card);
       });
 
-      // Cargar Trabajos
+      // Cargar y filtrar Trabajos
+      renderTagFilters('job', activeJobTagFilter, (tag) => { activeJobTagFilter = tag; loadCustomContent(); });
       const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
       const jobsGrid = document.getElementById('jobsGrid');
       jobsGrid.innerHTML = '';
+
       jobs.forEach((j, idx) => {
+        const jTags = j.tags || [];
+        if (activeJobTagFilter !== "Todos" && !jTags.includes(activeJobTagFilter)) return;
+
         const card = document.createElement('div');
         card.className = "bg-[#111827] border border-slate-800/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between relative";
         
@@ -564,7 +667,7 @@
             </div>
             <p class="text-slate-400 text-xs leading-relaxed mb-6">${j.desc}</p>
             <div class="flex flex-wrap gap-2 mb-6">
-              ${j.tags.map(t => `<span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">${t.trim()}</span>`).join('')}
+              ${jTags.map(t => `<span class="bg-blue-900/30 text-blue-400 border border-blue-800/50 text-xs px-3 py-1 rounded-full">${t}</span>`).join('')}
             </div>
           </div>
           <a href="${j.discord || '#'}" target="_blank" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-medium py-2.5 rounded-xl transition-all text-center text-xs block">Unirse al Discord</a>
