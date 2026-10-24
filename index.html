@@ -26,7 +26,7 @@
 </head>
 <body class="relative min-h-screen selection:bg-blue-600 selection:text-white">
 
-  <!-- GATEWAY DE ENTRADA (DISCORD) -->
+  <!-- GATEWAY DE ENTRADA (DISCORD MANDATORIO) -->
   <div id="discordGate" class="fixed inset-0 z-50 flex items-center justify-center bg-black/80 blur-gate p-4">
     <div class="bg-[#111827] border border-blue-900/50 rounded-2xl p-8 max-w-md w-full text-center shadow-2xl relative overflow-hidden">
       <div class="absolute -top-12 -right-12 w-32 h-32 bg-blue-600/20 rounded-full blur-2xl"></div>
@@ -91,7 +91,7 @@
       <a href="#contacto" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold px-6 py-3 rounded-xl transition-all border border-slate-700">
         Contáctame
       </a>
-      <a href="https://twitch.tv" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
+      <a href="https://www.twitch.tv/sebas_owo1" target="_blank" class="bg-[#9146FF] hover:bg-[#772ce8] text-white font-semibold px-5 py-3 rounded-xl transition-all flex items-center gap-2 shadow-lg shadow-purple-600/20">
         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
           <path d="M11.571 4.714h1.715v5.143h-1.715zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/>
         </svg>
@@ -121,7 +121,7 @@
         <p>Me gusta crear experiencias inspiradas en grandes eventos y servidores personalizados como Eufonia Studio.</p>
         <p>También trabajo con variables usando el plugin <strong>ServerVariables</strong> y sistemas avanzados para servidores.</p>
 
-        <!-- DISCORD STATUS WIDGET -->
+        <!-- DISCORD STATUS EN VIVO DE SEBASOWO -->
         <div class="pt-4">
           <div id="discordStatusCard" class="bg-[#111827] border border-slate-800 rounded-2xl p-4 flex items-center gap-4 max-w-md shadow-xl">
             <div class="relative">
@@ -150,9 +150,7 @@
       </button>
     </div>
 
-    <!-- Filtro de Tags para Proyectos -->
     <div id="projectTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
-
     <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-3 gap-6"></div>
   </section>
 
@@ -165,9 +163,7 @@
       </button>
     </div>
 
-    <!-- Filtro de Tags para Trabajo -->
     <div id="jobTagsFilter" class="flex flex-wrap gap-2 mb-8"></div>
-
     <div id="jobsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
   </section>
 
@@ -414,6 +410,7 @@
       }
     }
 
+    // --- LANYARD EN VIVO CON SPOTIFY Y JUEGOS ---
     function connectLanyardStatus() {
       const ws = new WebSocket('wss://api.lanyard.rest/socket');
       ws.onopen = () => ws.send(JSON.stringify({ op: 2, d: { subscribe_to_id: MY_DISCORD_ID } }));
@@ -430,19 +427,33 @@
       const username = document.getElementById('dcUsername');
       const activity = document.getElementById('dcActivity');
 
+      // Nombre y avatar en tiempo real según tu cuenta de Discord
       if (d.discord_user) {
         username.innerText = d.discord_user.username;
         avatar.src = `https://cdn.discordapp.com/avatars/${MY_DISCORD_ID}/${d.discord_user.avatar}.png`;
       }
 
+      // Indicador de Estado
       dot.className = `absolute bottom-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-[#111827] status-${d.discord_status || 'offline'}`;
 
-      if (d.activities && d.activities.length > 0) {
-        const act = d.activities[0];
-        activity.innerText = `${act.name}${act.details ? ' • ' + act.details : ''}`;
-      } else {
-        activity.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Sin actividad reciente';
+      // Si estás escuchando Spotify
+      if (d.listening_to_spotify && d.spotify) {
+        activity.innerHTML = `🎵 Escuchando <strong>${d.spotify.song}</strong> - ${d.spotify.artist}`;
+        return;
       }
+
+      // Si estás jugando a un juego
+      if (d.activities && d.activities.length > 0) {
+        const game = d.activities.find(a => a.type !== 4);
+        if (game) {
+          const details = game.details ? ` (${game.details})` : '';
+          activity.innerHTML = `🎮 Jugando a <strong>${game.name}</strong>${details}`;
+          return;
+        }
+      }
+
+      // Sin actividad
+      activity.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Conectado (Sin actividad)';
     }
 
     // --- MANEJO DE TAGS (SELECCIONAR Y ELIMINAR GLOBALES) ---
@@ -623,7 +634,7 @@
         return `<video class="w-full h-full object-cover" controls src="${url}"></video>`;
       };
 
-      // Cargar y filtrar Proyectos
+      // Proyectos
       renderTagFilters('proj', activeProjTagFilter, (tag) => { activeProjTagFilter = tag; loadCustomContent(); });
       const projects = JSON.parse(localStorage.getItem('custom_projects') || JSON.stringify(defaultProjects));
       const projGrid = document.getElementById('projectsGrid');
@@ -652,7 +663,7 @@
         projGrid.appendChild(card);
       });
 
-      // Cargar y filtrar Trabajos
+      // Trabajos
       renderTagFilters('job', activeJobTagFilter, (tag) => { activeJobTagFilter = tag; loadCustomContent(); });
       const jobs = JSON.parse(localStorage.getItem('custom_jobs') || JSON.stringify(defaultJobs));
       const jobsGrid = document.getElementById('jobsGrid');
@@ -689,7 +700,7 @@
         jobsGrid.appendChild(card);
       });
 
-      // Cargar Testimonios
+      // Testimonios
       const testimonials = JSON.parse(localStorage.getItem('custom_testimonials') || JSON.stringify(defaultTestimonials));
       const testiGrid = document.getElementById('testimonialsGrid');
       testiGrid.innerHTML = '';
