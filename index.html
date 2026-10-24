@@ -138,7 +138,10 @@
             <div id="dcActivityCard" class="hidden bg-[#2b2d31] rounded-xl p-3.5 border border-slate-700/50">
               <p class="text-[10px] font-bold tracking-wider text-slate-400 uppercase mb-2">Actividad Actual</p>
               <div class="flex items-center gap-3">
-                <img id="dcActIcon" src="" class="w-12 h-12 rounded-lg object-cover hidden">
+                <div class="w-12 h-12 rounded-lg bg-orange-500/20 border border-orange-500/30 flex items-center justify-center shrink-0 overflow-hidden">
+                  <img id="dcActIcon" src="" class="w-full h-full object-cover hidden">
+                  <span id="dcActFallbackIcon" class="text-xl">☕</span>
+                </div>
                 <div class="min-w-0 flex-1">
                   <h5 id="dcActName" class="text-sm font-bold text-white truncate"></h5>
                   <p id="dcActDetails" class="text-xs text-slate-300 truncate mt-0.5"></p>
@@ -154,11 +157,6 @@
                 Escuchando Spotify
               </p>
               <div id="spotifyEmbedWrapper" class="rounded-xl overflow-hidden shadow-lg border border-emerald-500/20"></div>
-            </div>
-
-            <!-- AVISO DE CONEXIÓN DE LANYARD SI NO DETECTA ESTADO -->
-            <div id="lanyardNotice" class="text-[11px] text-slate-500 text-center pt-1 border-t border-slate-800">
-              ¿No ves el estado? Únete 1 vez a <a href="https://discord.gg/lanyard" target="_blank" class="text-blue-400 underline font-semibold">discord.gg/lanyard</a>
             </div>
 
           </div>
@@ -431,9 +429,8 @@
       }
     }
 
-    // --- CONEXIÓN LANYARD REALTIME CON REPRODUCTOR SPOTIFY EN VIVO Y ACTIVIDADES ---
+    // --- CONEXIÓN LANYARD REALTIME SIN BUGS ---
     function connectLanyardStatus() {
-      // Intentar primero por API REST por si tarda el WebSocket
       fetch(`https://api.lanyard.rest/v1/users/${MY_DISCORD_ID}`)
         .then(res => res.json())
         .then(res => { if (res.data) updateDiscordCard(res.data); })
@@ -455,13 +452,14 @@
       const customStatus = document.getElementById('dcCustomStatus');
       const actCard = document.getElementById('dcActivityCard');
       const actIcon = document.getElementById('dcActIcon');
+      const fallbackIcon = document.getElementById('dcActFallbackIcon');
       const actName = document.getElementById('dcActName');
       const actDetails = document.getElementById('dcActDetails');
       const actState = document.getElementById('dcActState');
       const spotifyContainer = document.getElementById('spotifyContainer');
       const spotifyWrapper = document.getElementById('spotifyEmbedWrapper');
 
-      // Nombre y foto de Discord en tiempo real
+      // Nombre y foto de Discord
       if (d.discord_user) {
         username.innerText = d.discord_user.username;
         avatar.src = `https://cdn.discordapp.com/avatars/${MY_DISCORD_ID}/${d.discord_user.avatar}.png`;
@@ -481,7 +479,7 @@
         customStatus.innerText = d.discord_status === 'offline' ? 'Desconectado' : 'Sin estado personalizado';
       }
 
-      // 1. REPRODUCTOR EN VIVO DE SPOTIFY
+      // 1. SPOTIFY EN VIVO (Exclusivo en el reproductor verde)
       if (d.listening_to_spotify && d.spotify && d.spotify.track_id) {
         spotifyContainer.classList.remove('hidden');
         if (currentSpotifyTrackId !== d.spotify.track_id) {
@@ -493,8 +491,8 @@
         currentSpotifyTrackId = "";
       }
 
-      // 2. ACTIVIDAD DE JUEGO / INTELLIJ / PROCESOS
-      const gameAct = d.activities ? d.activities.find(a => a.type !== 4) : null;
+      // 2. ACTIVIDAD DE JUEGO / INTELLIJ / PROCESOS (EXCLUYENDO SPOTIFY DE ESTE CUADRO)
+      const gameAct = d.activities ? d.activities.find(a => a.type !== 4 && a.name.toLowerCase() !== 'spotify') : null;
       if (gameAct) {
         actCard.classList.remove('hidden');
         actName.innerText = gameAct.name;
@@ -503,6 +501,7 @@
 
         if (gameAct.assets && gameAct.assets.large_image) {
           actIcon.classList.remove('hidden');
+          fallbackIcon.classList.add('hidden');
           if (gameAct.assets.large_image.startsWith('mp:external/')) {
             actIcon.src = `https://media.discordapp.net/${gameAct.assets.large_image.replace('mp:', '')}`;
           } else {
@@ -510,6 +509,13 @@
           }
         } else {
           actIcon.classList.add('hidden');
+          fallbackIcon.classList.remove('hidden');
+          // Icono específico si es IntelliJ
+          if (gameAct.name.toLowerCase().includes('intellij')) {
+            fallbackIcon.innerText = "☕";
+          } else {
+            fallbackIcon.innerText = "🎮";
+          }
         }
       } else {
         actCard.classList.add('hidden');
